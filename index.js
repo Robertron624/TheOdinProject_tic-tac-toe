@@ -72,10 +72,14 @@ function main () {
 
     let currentPlayer = "X";
     const resetButton = document.getElementById("reset");
-
-
     const boardElement = document.getElementById("board");
-    boardElement.addEventListener("click", (event) => {
+    const statusElement = document.getElementById("status");
+
+
+    updateStatus(currentPlayer);
+    boardElement.addEventListener("click", handleBoard);
+
+    function handleBoard (event) {
         const cell = event.target;
         const index = cell.getAttribute("data-index") - 1;
         
@@ -87,6 +91,8 @@ function main () {
             } else {
                 currentPlayer = "X";
             }
+
+            updateStatus(currentPlayer);
 
             const {isGameOver, winner, winningCombo } = GameBoard.checkIsGameOver();
 
@@ -105,15 +111,27 @@ function main () {
                 setTimeout(() => {
                     alert(`Player ${winner} wins!`);
                 }, 100);
+                removeEventListeners();
             }
 
         }
-    });
+    }
 
-    resetButton.addEventListener("click", () => {
+    resetButton.addEventListener("click", resetGame);
+
+    function removeEventListeners () {
+        boardElement.removeEventListener("click", handleBoard);
+    }
+
+    function resetGame () {
         GameBoard.reset();
         GameBoard.render();
-    });
+        boardElement.addEventListener("click", handleBoard);
+    }
+
+    function updateStatus (status) {
+        statusElement.innerHTML = `Player ${status}'s turn`;
+    }
 
 }
 

@@ -167,6 +167,13 @@ main {
     padding: 2rem 1rem;
 }
 
+main #status {
+    font-size: 2rem;
+    margin: 2rem 0;
+    color: rgb(68, 127, 107);
+    font-style: italic;
+}
+
 main #board{
     width: 70%;
     max-width: 400px;
