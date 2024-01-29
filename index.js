@@ -56,13 +56,14 @@ const GameBoard = (function (){
             const b = board[combo[1]];
             const c = board[combo[2]];
             if (a && a === b && a === c) {
-                return {isGameOver: true, winner: a};
+                const winningCombo = winningCombos[i];
+                return {isGameOver: true, winner: a, winningCombo};
             }
         }
         return {isGameOver: false, winner: null};
     }
 
-    return {render, getBoard, setOption, checkIsGameOver, reset, isDraw};
+    return {render, getBoard, setOption, checkIsGameOver, reset, isDraw, paintWinningCombo};
 
 })()
 
@@ -87,7 +88,7 @@ function main () {
                 currentPlayer = "X";
             }
 
-            const {isGameOver, winner} = GameBoard.checkIsGameOver();
+            const {isGameOver, winner, winningCombo } = GameBoard.checkIsGameOver();
 
             const isDraw = GameBoard.isDraw();
             if (isDraw) {
@@ -100,6 +101,7 @@ function main () {
 
             if (isGameOver) {
                 GameBoard.render();
+                GameBoard.paintWinningCombo(winningCombo);
                 setTimeout(() => {
                     alert(`Player ${winner} wins!`);
                 }, 100);
