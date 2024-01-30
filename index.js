@@ -102,6 +102,7 @@ function main () {
                 setTimeout(() => {
                     alert("It's a draw!");
                 }, 100);
+                statusElement.innerHTML = "It's a draw!";
                 return;
             }
 
@@ -111,6 +112,7 @@ function main () {
                 setTimeout(() => {
                     alert(`Player ${winner} wins!`);
                 }, 100);
+                statusElement.innerHTML = `Player ${winner} wins!`;
                 removeEventListeners();
             }
 
@@ -127,6 +129,8 @@ function main () {
         GameBoard.reset();
         GameBoard.render();
         boardElement.addEventListener("click", handleBoard);
+        currentPlayer = "X";
+        updateStatus(currentPlayer);
     }
 
     function updateStatus (status) {
